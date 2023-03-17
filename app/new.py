@@ -3,6 +3,7 @@ import requests
 import json
 from itertools import islice, chain
 from time import sleep
+import os
 
 CONTEST_COUNT = 10
 
@@ -43,15 +44,12 @@ for id, problem in enumerate(all_json["result"]["problems"]):
     if problem.get("rating", False) and problem.get("tags", False):
         problem["solvedCount"] = all_json["result"]["problemStatistics"][id]["solvedCount"]
         problem_site_id = (problem["contestId"], problem["index"])
-#        if problem_site_id not in existing_problems:
         problems_new.append(problem)
 print(len(problems_new))
 
-#problems_list = problems_list[:8001]
 
 tup = ((p["contestId"],p["index"],p["name"],p["solvedCount"],p["rating"],p["tags"]) for p in problems_new)
 args_str = ','.join(cur.mogrify("(%s,%s,%s,%s,%s,%s)", x).decode('utf-8') for x in tup)
-#cur.execute("INSERT INTO Problems VALUES " + args_str)
 
 print("insert problems ->")
 sql_query = f'''
@@ -59,7 +57,6 @@ sql_query = f'''
     VALUES  {args_str}
     ON CONFLICT (SiteId, SiteIndex) DO UPDATE SET SolvedCount = EXCLUDED.SolvedCount
 '''
-#problem["db_id"] = sql_problem_id
 if args_str:
     cur.execute(sql_query)
     print("finish insert problems ->")
@@ -121,37 +118,14 @@ DROP TABLE temp_info;
 '''
 cur.execute(fill_contests_sql)
 con.commit()
-sql = '''
-SELECT count(*) FROM Problems
-'''
-cur.execute(sql)
-print(len(cur.fetchall()))
-sleep(5)
+
 cur.execute(f"SELECT * FROM Problems")
 print(len(cur.fetchall()))
-#print(existing_problems[:3])
 cur.execute(f"SELECT * FROM Contests")
 print(len(cur.fetchall()))
 cur.execute(f"SELECT * FROM ContestInfo")
 print(len(cur.fetchall()))
-#print(problems_list[index])
-
 print("==========")
-#cur.execute(f"SELECT * FROM Contests WHERE Id = 5")
-#print(cur.fetchall())
-"""
-sql_query = '''
-    SELECT *
-    FROM Problems 
-    WHERE Id IN (SELECT ProblemId FROM ContestInfo WHERE ContestId = 5)
-'''
-"""
-#cur.execute(sql_query)
-#selected = cur.fetchall()
-#print(tag, selected)
-#print all_json["result"]["problemStatistics"][index]
 con.commit()
 con.close()
 
-#print(tags)
-#print(ratings)
