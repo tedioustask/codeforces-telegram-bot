@@ -15,4 +15,9 @@ To run bot clone this repository and run cd to repo folder and run
 chmod +x install.sh
 sudo ./install.sh
 ```
+To stop bot just run in repo folder
+```
+sudo docker-compose down
+```
 Tested on Ubuntu server 22.04
+
