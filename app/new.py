@@ -6,6 +6,12 @@ from time import sleep
 
 CONTEST_COUNT = 10
 
+TOKEN = os.environ['BOT_TOKEN']
+DB_HOST = os.environ['DB_HOST']
+DB = os.environ['POSTGRES_DB']
+USER = os.environ['POSTGRES_USER']
+PWD = os.environ['POSTGRES_PASSWORD']
+
 print("request ->")
 status_code = 0
 while status_code != 200:
@@ -19,6 +25,7 @@ all_json = json.loads(r.text)
 
 while True:    
     try:
+        con = psycopg2.connect(database=DB, user=USER, password=PWD, host=DB_HOST)
         con = psycopg2.connect(database="codeforces", user="pwd", password="pwd", host="postgres")
         cur = con.cursor()
     except Exception as e:
