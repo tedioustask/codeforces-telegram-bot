@@ -6,12 +6,13 @@ After running shell script docker-compose will installed to run 3 services:
 - Bot Container
 - DB updater container
 
-# Installation
+# Starting bot
 
-Before running change BOT_TOKEN variable in env file for appropriated telegram API token
+Before running change `BOT_TOKEN` variable in *env* file for appropriated telegram API token
 
-To install bot clone this repository and run
+To run bot clone this repository and run cd to repo folder and run
+```
 chmod +x install.sh
 sudo ./install.sh
-
+```
 Tested on Ubuntu server 22.04
