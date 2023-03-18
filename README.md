@@ -1,13 +1,14 @@
 # Codeforces-telegram-bot
 
-Telegram bot for codeforces.com to fetch problem set filtered by rating and tag 
-It parse all problems fetched with API endpoint `/api/problemset.problems` and store them to database
-Whole problem set splits to contests by tag and rating after that
+Telegram bot for codeforces.com to fetch problem set filtered by rating and tag.
+It parse all problems fetched with API endpoint `/api/problemset.problems` and store them to database.
+Whole problem set splits to contests by tag and rating after that.
 
 After running shell script docker-compose and cron will installed to run 3 services:
 - PostgreSQL DB container
 - Telegram Bot container
 - DB updater container
+
 Updater container starts by cron job every hour
 
 # Starting bot
